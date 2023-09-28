@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  go-boilerplate:
+    container_name: go-boilerplate
+    build:
+      context: ./
+      dockerfile: .setup/build/Dockerfile
+      target: dev
+    image: go-boilerplate
+    command: CompileDaemon -directory="./" -build="go build -o ./go-boilerplate ./cmd/api/main.go" -command="./go-boilerplate"
+    environment:
+      - GO_ENV=development
+      - APP_PORT=:8080
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./:/app
+    networks:
+      - go-boilerplate
+
+networks:
+  go-boilerplate:
+    name: 'go-boilerplate'
